@@ -2,6 +2,8 @@ var Scrabble = function() {};
 
 var Scoring = function() {};
 
+Scoring.prototype = Scrabble;
+
 Scoring.score = function(input) {
   var totalValue = 0;
   var word = input.toLowerCase();
@@ -55,18 +57,18 @@ Scoring.highestScoreFrom = function(arrayOfWords) {
   var currentWord = [];
 
   for (var i = 0; i < arrayOfWords.length; i++) {
-    var input = arrayOfWords[i];
-    var totalValue = this.score(input);
+    var word = arrayOfWords[i];
+    var totalValue = this.score(word);
     if (totalValue >= maxScore) {
       // Clears array if another word is higher, otherwise, it will just generate a giant array
       // of highest scoring words and not be specific when there is a tie
       if (totalValue > maxScore) {
         currentWord = [];
-        currentWord.push(input);
+        currentWord.push(word);
         maxScore = totalValue;
       } else {
         // Returns array of words with multiple words if there's a tie
-        currentWord.push(input);
+        currentWord.push(word);
       }
     }
   }
@@ -78,17 +80,54 @@ Scoring.highestScoreFrom = function(arrayOfWords) {
   // words. This will narrow it down and award the victory to the seven letter word.
   if (currentWord.length > 0) {
     for (var l = 0; l < currentWord.length; l++) {
-      if (currentWord[l].length == 7) {
-        return currentWord[l];
-      } else if (currentWord[l].length < lengthOfWord) {
-        lengthOfWord = currentWord[l].length;
-        smallWord = currentWord[l];
+      var current = currentWord[l];
+      if (current.length == 7) {
+        return current;
+      } else if (current.length < lengthOfWord) {
+        lengthOfWord = current.length;
+        smallWord = current;
       }
     }
   // Returns shortest word if there is NOT a seven letter word
   return smallWord;
   }
 };
+
+var Player = function(name) {
+  this.name = name;
+};
+
+Player.prototype = Scrabble;
+
+Player.name = function() {
+  // Returns the value of the player's name
+};
+
+Player.plays = function() {
+  // Returns an Array of the words played by the player
+};
+
+Player.play = function(word) {
+  // Adds the input word to the plays Array
+  // Returns false if player has already won
+};
+
+Player.totalScore = function() {
+  // Sums up and returns the score of the players words
+};
+
+Player.hasWon = function() {
+  // Returns true if the player has over 100 points, otherwise returns false
+};
+
+Player.highestScoringWord = function() {
+  // Returns the highest scoring word the user has played
+};
+
+Player.highestWordScore = function() {
+  // Returns the highestScoringWord score
+};
+
 
 module.exports = Scrabble;
 
