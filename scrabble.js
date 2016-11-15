@@ -1,13 +1,14 @@
 var Scrabble = function() {};
 
-// YOUR CODE HERE
-// Scrabble.prototype.helloWorld = function() {
-//   return 'hello world!';
-// };
+var Scoring = function() {};
 
-Scrabble.prototype.score = function(input) {
+Scoring.score = function(input) {
   var totalValue = 0;
   var word = input.toLowerCase();
+
+  if (! /^[a-zA-Z0-9]+$/.test(word)) {
+    return "I'm sorry, but you need to input a word containing only letters";
+  }
 
   // Might refactor to use property map rather than switch:
   // var map = { A:1, B:1, C:1, D:2, E:2, F:2 };
@@ -49,22 +50,23 @@ Scrabble.prototype.score = function(input) {
 };
 
 
-Scrabble.prototype.highestScoreFrom = function(arrayOfWords) {
+Scoring.highestScoreFrom = function(arrayOfWords) {
   var maxScore = 0;
   var currentWord = [];
 
   for (var i = 0; i < arrayOfWords.length; i++) {
-    var totalValue = score(word);
-    if (score >= maxScore) {
+    var input = arrayOfWords[i];
+    var totalValue = this.score(input);
+    if (totalValue >= maxScore) {
       // Clears array if another word is higher, otherwise, it will just generate a giant array
       // of highest scoring words and not be specific when there is a tie
-      if (score > maxScore) {
+      if (totalValue > maxScore) {
         currentWord = [];
-        currentWord.push(word);
-        maxScore = score;
+        currentWord.push(input);
+        maxScore = totalValue;
       } else {
         // Returns array of words with multiple words if there's a tie
-        currentWord.push(word);
+        currentWord.push(input);
       }
     }
   }
@@ -75,21 +77,19 @@ Scrabble.prototype.highestScoreFrom = function(arrayOfWords) {
   // If there is a tie between a seven-letter word and a shorter word, the array will have both
   // words. This will narrow it down and award the victory to the seven letter word.
   if (currentWord.length > 0) {
-    for (var l = 0; i < currentWord.length; l++) {
-      if (word.length == 7) {
-        return word;
-      } else if (word.length < lengthOfWord) {
-        lengthOfWord = word.length;
-        smallWord = word;
+    for (var l = 0; l < currentWord.length; l++) {
+      if (currentWord[l].length == 7) {
+        return currentWord[l];
+      } else if (currentWord[l].length < lengthOfWord) {
+        lengthOfWord = currentWord[l].length;
+        smallWord = currentWord[l];
       }
     }
   // Returns shortest word if there is NOT a seven letter word
-  return small_word;
+  return smallWord;
   }
 };
 
 module.exports = Scrabble;
 
-var hi = new Scrabble();
-
-console.log(hi.score("ABC"));
+console.log(Scoring.highestScoreFrom(["hello","what","sup"]));
