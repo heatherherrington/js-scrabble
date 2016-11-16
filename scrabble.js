@@ -1,4 +1,7 @@
-var Scrabble = function() {};
+var Scrabble = function(name, wordsPlayed) {
+  this.name = name;
+  this.wordsPlayed = wordsPlayed;
+};
 
 var Scoring = function() {};
 
@@ -51,13 +54,13 @@ Scoring.score = function(input) {
   return totalValue;
 };
 
-
 Scoring.highestScoreFrom = function(arrayOfWords) {
   var maxScore = 0;
   var currentWord = [];
+  var wordArray = arrayOfWords;
 
-  for (var i = 0; i < arrayOfWords.length; i++) {
-    var word = arrayOfWords[i];
+  for (var i = 0; i < wordArray.length; i++) {
+    var word = wordArray[i];
     var totalValue = this.score(word);
     if (totalValue >= maxScore) {
       // Clears array if another word is higher, otherwise, it will just generate a giant array
@@ -93,42 +96,81 @@ Scoring.highestScoreFrom = function(arrayOfWords) {
   }
 };
 
-var Player = function(name) {
-  this.name = name;
-};
+var Player = function() {};
 
 Player.prototype = Scrabble;
 
-Player.name = function() {
-  // Returns the value of the player's name
+Player.playerName = function(name) {
+  return name;
 };
 
-Player.plays = function() {
-  // Returns an Array of the words played by the player
-};
-
+// Adds the input word to the wordsPlayed Array
+// Returns false if player has already won
 Player.play = function(word) {
-  // Adds the input word to the plays Array
-  // Returns false if player has already won
+  var wordArray = [];
+  wordArray.push(word);
+  if (this.hasWon) {
+    return false;
+  } else {
+    return true;
+  }
 };
 
+// Returns an Array of the words played by the player
+Player.plays = function() {
+  var wordsPlayed = this.play();
+  return wordsPlayed;
+};
+
+// Sums up and returns the score of the players words
 Player.totalScore = function() {
-  // Sums up and returns the score of the players words
+  var playerTotalScore = 0;
+  for (var m = 0; m < wordsPlayed.length; m++) {
+    playerTotalScore += Scoring.score(word);
+  }
+  return playerTotalScore;
 };
 
+// Returns `true` if the player has over 100 points, otherwise returns `false`
 Player.hasWon = function() {
-  // Returns true if the player has over 100 points, otherwise returns false
+  var playerTotalScore = this.totalScore();
+  if (playerTotalScore > 100) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
+// Returns the highest scoring word the user has played
 Player.highestScoringWord = function() {
-  // Returns the highest scoring word the user has played
+  if (wordsPlayed.length === 0) {
+    return "No words have been played";
+  }
+
+  var maxWord = "";
+  var maxWordScore = 0;
+
+  // Iterates over the words that have been played by this player and finds the word with the highest total score. Returns that word.
+  for (var n = 0; n < wordsPlayed.length; n++) {
+    var score = Scoring.score(word);
+    // Keeps track of both word and score, to avoid duplication of code in highest_word_score
+    if (score > maxWordScore) {
+      maxWordScore = score;
+      maxWord = word;
+    }
+  }
+  return maxWord;
 };
 
+// Returns the highestScoringWord score
 Player.highestWordScore = function() {
-  // Returns the highestScoringWord score
+  var maxScore = this.highestScoringWord();
+  return maxScore;
 };
-
 
 module.exports = Scrabble;
 
 console.log(Scoring.highestScoreFrom(["hello","what","sup"]));
+console.log(Player.play("lovely"));
+console.log(Scoring.score("yay"));
+console.log(Player.playerName("Heather"));
