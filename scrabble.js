@@ -9,6 +9,7 @@ Scrabble.prototype.score = function(word) {
   }
 
   // Might refactor to use property map rather than switch:
+  // Or not, ran out of energy :(
   // Example: var map = { A:1, B:1, C:1, D:2, E:2, F:2 };
   // console.log(map.A+map.D+map.D); // 5
   for (var i = 0; i < word.length; i++) {
@@ -89,6 +90,7 @@ Scrabble.prototype.highestScoreFrom = function(arrayOfWords) {
   }
 };
 
+// I'm not sure if this was the intent, but I talked with a classmate and decided that a Player should be able to play any game, so you'd instantiate a new Scrabble game for each Player
 var Player = function(name, scrabble = (new Scrabble())) {
   this.name = name;
   this.scrabble = scrabble;
@@ -156,24 +158,20 @@ Player.prototype.highestScoringWord = function() {
   return "Max score: " + maxWordScore + " and max scoring word: " + maxWord;
 };
 
-// Returns the highestScoringWord score
-// Player.prototype.highestWordScore = function() {
-//   var maxScore = this.highestScoringWord();
-//   return maxScore;
-// };
-
 module.exports = Scrabble;
 
 var playerOne = new Player();
 var playerScrabble = new Scrabble();
 
-console.log("Highest Score From Three Words: " + playerScrabble.highestScoreFrom(["hello","what","sup"]));
-console.log("Returns a score for a particular word: " + playerScrabble.score("yay"));
-console.log("Player's name is: " + playerOne.playerName("Heather"));
-console.log("Log a word and return false if the player has won: " + playerOne.play("howdy"));
-console.log("Log a word and return false if the player has won: " + playerOne.play("lovely"));
-console.log("Return total score for one player: " + playerOne.totalScore());
-console.log("Log a word and return false if the player has won: " + playerOne.play("qqzzzzzz"));
-console.log("Return total score for one player: " + playerOne.totalScore());
-console.log("Log a word and return false if the player has won: " + playerOne.play("qqzzzzzz"));
-console.log("Should return an array of words from one player: " + playerOne.plays());
+// Test cases
+
+// console.log("Highest Score From Three Words: " + playerScrabble.highestScoreFrom(["hello","what","sup"]));
+// console.log("Returns a score for a particular word: " + playerScrabble.score("yay"));
+// console.log("Player's name is: " + playerOne.playerName("Heather"));
+// console.log("Log a word and return false if the player has won: " + playerOne.play("howdy"));
+// console.log("Log a word and return false if the player has won: " + playerOne.play("lovely"));
+// console.log("Return total score for one player: " + playerOne.totalScore());
+// console.log("Log a word and return false if the player has won: " + playerOne.play("qqzzzzzz"));
+// console.log("Return total score for one player: " + playerOne.totalScore());
+// console.log("Log a word and return false if the player has won: " + playerOne.play("qqzzzzzz"));
+// console.log("Should return an array of words from one player: " + playerOne.plays());
