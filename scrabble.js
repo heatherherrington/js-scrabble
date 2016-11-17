@@ -102,7 +102,7 @@ Player.prototype.playerName = function(name) {
 // Adds the input word to the wordsPlayed Array
 // Returns false if player has already won
 Player.prototype.play = function(word) {
-  if (this.hasWon === true) {
+  if (this.hasWon()) {
     return false;
   }
 
@@ -175,4 +175,5 @@ console.log("Log a word and return false if the player has won: " + playerOne.pl
 console.log("Return total score for one player: " + playerOne.totalScore());
 console.log("Log a word and return false if the player has won: " + playerOne.play("qqzzzzzz"));
 console.log("Return total score for one player: " + playerOne.totalScore());
+console.log("Log a word and return false if the player has won: " + playerOne.play("qqzzzzzz"));
 console.log("Should return an array of words from one player: " + playerOne.plays());
